@@ -41,24 +41,55 @@ class DBManager:
 
     def get_companies_and_vacancies_count(self):
         """Получает список всех компаний и количество вакансий у каждой компании"""
-        pass
+        with self.conn:
+            with self.conn.cursor() as cur:
+                cur.execute('SELECT company_name, COUNT(vacancy) AS number_of_vacancies '
+                            'FROM vacancies '
+                            'INNER JOIN employers USING(company_id) '
+                            'GROUP BY company_name')
+                data = cur.fetchall()
+                return data
 
     def get_all_vacancies(self):
         """Получает список всех вакансий с указанием названия компании,
         названия вакансии, зарплаты и ссылки на вакансию"""
-        pass
+        with self.conn:
+            with self.conn.cursor() as cur:
+                cur.execute('SELECT vacancy, company_name, salary, vacancies.url '
+                            'FROM vacancies '
+                            'INNER JOIN employers USING(company_id)')
+                data = cur.fetchall()
+                return data
 
     def get_avg_salary(self):
         """Получает среднюю зарплату по вакансиям"""
-        pass
+        with self.conn:
+            with self.conn.cursor() as cur:
+                cur.execute('SELECT AVG(salary) '
+                            'FROM vacancies')
+                data = cur.fetchall()
+                return data
 
     def get_vacancies_with_higher_salary(self):
         """Получает список всех вакансий, у которых зарплата выше средней"""
-        pass
+        with self.conn:
+            with self.conn.cursor() as cur:
+                cur.execute('SELECT vacancy, salary, company_name '
+                            'FROM vacancies '
+                            'INNER JOIN employers USING(company_id) '
+                            'WHERE salary > (SELECT AVG(salary) FROM vacancies)')
+                data = cur.fetchall()
+                return data
 
     def get_vacancies_with_keyword(self, keyword):
         """Получает список всех вакансий, в названии которых содержатся переданные в метод слова”"""
-        pass
+        with self.conn:
+            with self.conn.cursor() as cur:
+                cur.execute(f'SELECT vacancy '
+                            'FROM vacancies '
+                            f'WHERE vacancy LIKE \'%{keyword}%\'')
+                data = cur.fetchall()
+                return data
 
     def close_connection(self):
         """Закрывает подключение к БД"""
