@@ -1,5 +1,7 @@
 from src.api_func import get_company_by_name, get_vacancies
 from src.db_manager_cls import DBManager
+from src.print_funcs import print_companies_and_vacancies_count, print_all_vacancies, print_avg_salary, \
+    print_vacancies_with_higher_salary, print_vacancies_with_keyword
 
 companies = ['Альфа-Банк', 'Тинькофф',  'Сбер IT', 'Ростелеком', 'HR Prime', 'Mindbox', 'Tevian', 'Digital Reputation',
              'Anabar', 'Rubbles']
@@ -25,13 +27,17 @@ for emp in emp_data:
         db_manager.save_vacancy(vac['id'], vac['name'], emp[0], salary, vac['alternate_url'])
 
 vacancies_per_company = db_manager.get_companies_and_vacancies_count()
-print(vacancies_per_company)
+print_companies_and_vacancies_count(vacancies_per_company)
+print()
 all_vacancies = db_manager.get_all_vacancies()
-print(all_vacancies)
+print_all_vacancies(all_vacancies)
+print()
 avg_salary = db_manager.get_avg_salary()
-print(avg_salary)
+print_avg_salary(avg_salary)
+print()
 vacancies_with_higher_salary = db_manager.get_vacancies_with_higher_salary()
-print(vacancies_with_higher_salary)
+print_vacancies_with_higher_salary(vacancies_with_higher_salary)
+print()
 vacancies_with_keyword = db_manager.get_vacancies_with_keyword('разработчик')
-print(vacancies_with_keyword)
+print_vacancies_with_keyword(vacancies_with_keyword)
 db_manager.close_connection()
