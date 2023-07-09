@@ -1,10 +1,14 @@
 # Employers_parser
+___
 ## Description
 The project is intended for parsing and sorting available vacancies of selected companies.
+___
 ## Requirements
-`requests`
+- `requests`
+- `psycopg2`
+___
 ## Running
-By default, there are 10 companies to work with, that can be replaced in the main file. After running the `main.py` file, for each company all currently available vacancies, posted on the HeadHunter, will be received. The received data is loaded into the database.
+By default, there are 10 companies to work with, that can be replaced in the `main.py` file. After running the `main.py` file, for each company all currently available vacancies, posted on the HeadHunter, will be received. The received data is loaded into the database.
 
 The database contains two tables: employers (with the fields: company_id, company_name, url (link to the employer page on the headhunter)) and vacancies (with fields: vacancy_id, vacancy_name, company_id, salary, url(link to the vacancy page on HeadHunter)).
 
