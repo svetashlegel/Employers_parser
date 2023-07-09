@@ -12,6 +12,12 @@ class DBManager:
             password='1651'
         )
 
+    def truncate_tables(self):
+        """Удаляет содержимое таблиц employers, vacancies"""
+        with self.conn:
+            with self.conn.cursor() as cur:
+                cur.execute('TRUNCATE TABLE vacancies, employers')
+
     def save_employer(self, company_id, company_name, url):
         """Сохраняет данные по работодателю в БД"""
         with self.conn:
