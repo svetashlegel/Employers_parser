@@ -1,14 +1,14 @@
 # Employers_parser
-___
+
 ## Description
 The project is intended for parsing and sorting available vacancies of selected companies.
-___
+
 ## Requirements
 - `requests`
 - `psycopg2`
-___
+
 ## DataBase connection
-Create a `database.ini` configuration file with your database connection settings.
+Create a `database.ini` configuration file with your database connection settings in `src` directory.
 
 File content example:
 ```ini
@@ -18,7 +18,7 @@ user=postgres
 password=12345
 port=5432
 ```
-___
+
 ## Running
 By default, there are 10 companies to work with, that can be replaced in the `main.py` file. After running the `main.py` file, for each company all currently available vacancies, posted on the HeadHunter, will be received. The received data is loaded into the database.
 
