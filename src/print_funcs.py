@@ -31,8 +31,8 @@ def print_vacancies_with_higher_salary(data):
         print(f"{i[0]} ({i[2]}): {i[1]} руб.")
 
 
-def print_vacancies_with_keyword(data):
+def print_vacancies_with_keyword(data, keyword):
     """Преобразует и выводит на экран вакансии по ключевому слову"""
-    print(f"Вакансии по ключевому слову:")
+    print(f"Вакансии по ключевому слову \'{keyword}\':")
     for i in data:
         print(i[0])

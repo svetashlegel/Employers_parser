@@ -1,16 +1,25 @@
 from src.api_func import get_company_by_name, get_vacancies
 from src.config import config
+from src.command_reader import read_commands_from_file
+from src.db_creator import create_database
 from src.db_manager_cls import DBManager
 from src.print_funcs import print_companies_and_vacancies_count, print_all_vacancies, print_avg_salary, \
     print_vacancies_with_higher_salary, print_vacancies_with_keyword
 
+
+database = 'comp_vacancies'
+sql_file = 'queries.sql'
+params = config()
 companies = ['Альфа-Банк', 'Тинькофф',  'Сбер IT', 'Ростелеком', 'HR Prime', 'Mindbox', 'Tevian', 'Digital Reputation',
              'Anabar', 'Rubbles']
-database = 'comp_vacancies'
-params = config()
+keyword_for_search = 'разработчик'
 
-db_manager = DBManager(database, params)
-db_manager.truncate_tables()
+
+sql_commands = read_commands_from_file(sql_file)
+create_database(database, params, sql_commands)
+db_manager = DBManager(database, params, sql_commands)
+db_manager.create_tables()
+
 for company in companies:
     comp_data = get_company_by_name(company)
     db_manager.save_employer(comp_data['id'], comp_data['name'], comp_data['alternate_url'])
@@ -40,6 +49,6 @@ print()
 vacancies_with_higher_salary = db_manager.get_vacancies_with_higher_salary()
 print_vacancies_with_higher_salary(vacancies_with_higher_salary)
 print()
-vacancies_with_keyword = db_manager.get_vacancies_with_keyword('разработчик')
-print_vacancies_with_keyword(vacancies_with_keyword)
+vacancies_with_keyword = db_manager.get_vacancies_with_keyword(keyword_for_search)
+print_vacancies_with_keyword(vacancies_with_keyword, keyword_for_search)
 db_manager.close_connection()
