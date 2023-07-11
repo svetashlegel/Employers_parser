@@ -4,13 +4,8 @@ import psycopg2
 class DBManager:
     """Класс для работы с данными в БД"""
 
-    def __init__(self, database):
-        self.conn = psycopg2.connect(
-            host='localhost',
-            database=database,
-            user='postgres',
-            password='1651'
-        )
+    def __init__(self, database, params):
+        self.conn = psycopg2.connect(dbname=database, **params)
 
     def truncate_tables(self):
         """Удаляет содержимое таблиц employers, vacancies"""

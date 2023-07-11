@@ -1,4 +1,5 @@
 from src.api_func import get_company_by_name, get_vacancies
+from src.config import config
 from src.db_manager_cls import DBManager
 from src.print_funcs import print_companies_and_vacancies_count, print_all_vacancies, print_avg_salary, \
     print_vacancies_with_higher_salary, print_vacancies_with_keyword
@@ -6,8 +7,9 @@ from src.print_funcs import print_companies_and_vacancies_count, print_all_vacan
 companies = ['Альфа-Банк', 'Тинькофф',  'Сбер IT', 'Ростелеком', 'HR Prime', 'Mindbox', 'Tevian', 'Digital Reputation',
              'Anabar', 'Rubbles']
 database = 'comp_vacancies'
+params = config()
 
-db_manager = DBManager(database)
+db_manager = DBManager(database, params)
 db_manager.truncate_tables()
 for company in companies:
     comp_data = get_company_by_name(company)
